@@ -13,7 +13,6 @@ function toDateString(time) {
 }
 
 let arr = [];
-  
 async function getLastestTime() {
     arr = [];
     const db = firebase.firestore();
@@ -41,6 +40,7 @@ async function getAllTimes() {
         querySnapshot.forEach((doc) => {
         // console.log(toDateString(doc.data().time));
         arr.push(toDateString(doc.data().time));
+        arr.push('\n');
         });
     }
     else {
@@ -50,14 +50,14 @@ async function getAllTimes() {
     return arr;
 }
 
-
-function addCurrentTime() {
+async function addCurrentTime() {
     const db = firebase.firestore();
     const timeRef = db.collection('time');
     const addTime = {
         time: firebase.firestore.Timestamp.now()
     };
     timeRef.add(addTime);
+    return await getAllTimes();
 }
 
 async function deleteEarliestTime() {

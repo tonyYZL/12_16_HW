@@ -39,6 +39,27 @@ export default function App() {
       setRefreshing(false);
     });
   };
+  const onRefreshOne = () => {
+    setRefreshing(true);
+    TimeController.getLastestTime().then((res) => {
+      setTimes(res);
+      setRefreshing(false);
+    });
+  };
+  const onRefreshDelete = () => {
+    setRefreshing(true);
+    TimeController.deleteEarliestTime().then((res) => {
+      setTimes(res);
+      setRefreshing(false);
+    });
+  };
+  const onRefreshAdd = () => {
+    setRefreshing(true);
+    TimeController.addCurrentTime().then((res) => {
+      setTimes(res);
+      setRefreshing(false);
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,17 +71,38 @@ export default function App() {
               onRefresh={onRefresh}
             />
         )}
-        >
-      <Text>{times}</Text>
-      <Text>{'\n'}</Text>
-      <Text>{'\n'}</Text>
-      <Button onPress={TimeController.getLastestTime} title="get lastest time" color="#FFBF00" />
-      <Text>{'\n'}</Text>
-      <Button onPress={TimeController.getAllTimes} title="get all time" color="#007FFF" />
-      <Text>{'\n'}</Text>
-      <Button onPress={TimeController.addCurrentTime} title="add current time" color="#00FF00" />
-      <Text>{'\n'}</Text>
-      <Button onPress={TimeController.deleteEarliestTime} title="delete earliest time" color="#FF0000" />
+      >
+        <Text>{times}</Text>
+        <Text>{'\n'}</Text>
+        <Text>{'\n'}</Text>
+
+        <Button
+          onPress={onRefreshOne}
+          title="get lastest time"
+          color="#FFBF00"
+        />
+        <Text>{'\n'}</Text>
+        
+        <Button
+          onPress={onRefresh}
+          title="get all time"
+          color="#007FFF"
+        />
+        <Text>{'\n'}</Text>
+
+        <Button
+          onPress={onRefreshAdd}
+          title="add current time"
+          color="#00FF00"
+        />
+        <Text>{'\n'}</Text>
+
+        <Button
+        onPress={onRefreshDelete}
+        title="delete earliest time"
+        color="#FF0000"
+        />
+
       </ScrollView>
     </SafeAreaView>
   );
